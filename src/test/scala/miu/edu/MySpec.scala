@@ -1,4 +1,4 @@
-package org.example
+package miu.edu
 
 import org.specs._
 import org.specs.runner.{ConsoleRunner, JUnit4}
