@@ -117,9 +117,11 @@ object Main {
     println("Do Step 4 1000 times")
 
     var sum: List[RDD[(String, (Double, Double))]] = List()
+    var bootstrapSampleSize = bootstrapSample.count().toInt
+
     for (_ <- 1 to TIMES) {
       //5a. Create a “resampledData”. All you need to do is take 100% of the sample with replacement.
-      val resampleData = bootstrapSample.takeSample(withReplacement = true, bootstrapSample.count().toInt)
+      val resampleData = bootstrapSample.takeSample(withReplacement = true, bootstrapSampleSize)
 
       //5b. Compute the mean mpg and variance for each category (similar to Step 3)
       val rdd = sc.makeRDD(resampleData)
