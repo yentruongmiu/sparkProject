@@ -105,10 +105,8 @@ object Main {
     println("===== STEP 4 =====")
     println("Create the sample for bootstrapping. All you need to do is take 25% of the population without replacement")
 
-    var bootstrapSample = sc.emptyRDD[(String, String)]
-    while (bootstrapSample.keys.distinct().count() < MIN_KEYS) {
-      bootstrapSample = rdd.sample(withReplacement = false, FRACTION)
-    }
+    //var bootstrapSample = sc.emptyRDD[(String, String)]
+    var bootstrapSample = rdd.sample(withReplacement = false, FRACTION)
     bootstrapSample.foreach(println)
 
     println("===== STEP 5 =====")
@@ -143,7 +141,8 @@ object Main {
       .show()
 
     println("===== STEP 6.B =====")
-    println("Determine the absolute error percentage for each of the values being estimated: abs(actual – estimate)*100/actual")
+    println("Determine the absolute error percentage for each of the values being estimated: " +
+      "abs(actual – estimate)*100/actual")
 
     val dfAll = meanAndVariance.sortByKey().join(average)
       .map(x => (x._1, errorPercentage(x._2._1._1, x._2._2._1), errorPercentage(x._2._1._2, x._2._2._2)))
